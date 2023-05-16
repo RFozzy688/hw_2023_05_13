@@ -32,7 +32,8 @@ namespace task_2
             string str = null;
             string findWord = null;
             string replaceWord = null;
-            string path = "data.txt";
+            char[] separators = { ',', ' ', '.', '-' };
+            string path = "..\\..\\data.txt";
             int count = 0;
 
             ReadFromFile(path, ref str);
@@ -42,9 +43,21 @@ namespace task_2
             Console.Write("Заменить: ");
             replaceWord = Console.ReadLine();
 
+            string[] words = str.Split(separators);
+
+            foreach(string word in words)
+            {
+                if (word.Contains(findWord))
+                {
+                    count++;
+                }
+            }
+
             str = str.Replace(findWord, replaceWord);
 
             WriteToFile(path, str);
+
+            Console.WriteLine($"Количество замененных слов: {count}");
         }
     }
 }
