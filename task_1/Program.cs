@@ -25,23 +25,28 @@ namespace task_1
                 arr[i] = random.Next(-100000, 100000);
             }
         }
-        static void Main(string[] args)
+        static void WriteToFile(string path, int[] arr)
         {
-            int size = 100000;
-            int[] arr = new int[size];
-
-            FillArray(arr, size);
-
-            using(FileStream fs = new FileStream("data.txt", FileMode.Create, FileAccess.Write))
+            using (FileStream fs = new FileStream(path, FileMode.Create, FileAccess.Write))
             {
-                using(BinaryWriter bw = new BinaryWriter(fs, Encoding.Unicode))
+                using (BinaryWriter bw = new BinaryWriter(fs, Encoding.Unicode))
                 {
-                    foreach(int item in arr) 
+                    foreach (int item in arr)
                     {
                         bw.Write(item);
                     }
                 }
             }
+        }
+        static void Main(string[] args)
+        {
+            int size = 100000;
+            int[] arr = new int[size];
+            string path = "data.txt";
+
+            FillArray(arr, size);
+
+            WriteToFile(path, arr);
         }
     }
 }
