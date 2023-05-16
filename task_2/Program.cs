@@ -20,13 +20,31 @@ namespace task_2
                 str = sr.ReadToEnd();
             }
         }
+        static void WriteToFile(string path, string str)
+        {
+            using(StreamWriter sw = new StreamWriter(path))
+            {
+                sw.WriteLine(str);
+            }
+        }
         static void Main(string[] args)
         {
             string str = null;
+            string findWord = null;
+            string replaceWord = null;
+            string path = "data.txt";
+            int count = 0;
 
-            ReadFromFile("data.txt", ref str);
+            ReadFromFile(path, ref str);
 
-            Console.WriteLine(str);
+            Console.Write("Найти: ");
+            findWord = Console.ReadLine();
+            Console.Write("Заменить: ");
+            replaceWord = Console.ReadLine();
+
+            str = str.Replace(findWord, replaceWord);
+
+            WriteToFile(path, str);
         }
     }
 }
