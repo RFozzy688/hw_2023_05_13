@@ -54,6 +54,16 @@ namespace task_1
                 }
             }
         }
+        static void WriteToFileTxt(string path, Dictionary<string, int> map)
+        {
+            using (var sw = new StreamWriter(path))
+            {
+                foreach (var item in map)
+                {
+                    sw.WriteLine($"{item.Key}: {item.Value}");
+                }
+            }
+        }
         static void Main(string[] args)
         {
             int size = 100000;
@@ -99,6 +109,8 @@ namespace task_1
             {
                 Console.WriteLine($"{item.Key}: {item.Value}");
             }
+
+            WriteToFileTxt("stat.txt", map);
         }
     }
 }
