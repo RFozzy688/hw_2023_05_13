@@ -10,13 +10,38 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.IO;
 
 namespace task_1
 {
     internal class Program
     {
+        static void FillArray(int[] arr, int size)
+        {
+            Random random = new Random();
+
+            for (int i = 0; i < size; i++)
+            {
+                arr[i] = random.Next(-100000, 100000);
+            }
+        }
         static void Main(string[] args)
         {
+            int size = 100000;
+            int[] arr = new int[size];
+
+            FillArray(arr, size);
+
+            using(FileStream fs = new FileStream("data.txt", FileMode.Create, FileAccess.Write))
+            {
+                using(BinaryWriter bw = new BinaryWriter(fs, Encoding.Unicode))
+                {
+                    foreach(int item in arr) 
+                    {
+                        bw.Write(item);
+                    }
+                }
+            }
         }
     }
 }
