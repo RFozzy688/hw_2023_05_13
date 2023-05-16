@@ -59,6 +59,12 @@ namespace task_1
             int size = 100000;
             int[] arr = new int[size];
             string path = "data.txt";
+            Dictionary<string, int> map = new Dictionary<string, int>();
+
+            map.Add("Положительные", 0);
+            map.Add("Отрицательные", 0);
+            map.Add("Двухзначные", 0);
+            map.Add("Пятизначные", 0);
 
             FillArray(arr);
 
@@ -70,7 +76,28 @@ namespace task_1
 
             foreach (int item in newArr)
             {
-                Console.WriteLine(item);
+                if (item > 0)
+                {
+                    map["Положительные"] += 1;
+                }
+                else if (item < 0)
+                {
+                    map["Отрицательные"] += 1;
+                }
+
+                if (item >= 10 && item <= 99)
+                {
+                    map["Двухзначные"] += 1;
+                }
+                else if (item >= 10000 && item <= 99999)
+                {
+                    map["Пятизначные"] += 1;
+                }
+            }
+
+            foreach (var item in map)
+            {
+                Console.WriteLine($"{item.Key}: {item.Value}");
             }
         }
     }
