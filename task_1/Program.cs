@@ -16,11 +16,11 @@ namespace task_1
 {
     internal class Program
     {
-        static void FillArray(int[] arr, int size)
+        static void FillArray(int[] arr)
         {
             Random random = new Random();
 
-            for (int i = 0; i < size; i++)
+            for (int i = 0; i < arr.Length; i++)
             {
                 arr[i] = random.Next(-100000, 100000);
             }
@@ -29,11 +29,27 @@ namespace task_1
         {
             using (FileStream fs = new FileStream(path, FileMode.Create, FileAccess.Write))
             {
-                using (BinaryWriter bw = new BinaryWriter(fs, Encoding.Unicode))
+                using (BinaryWriter bw = new BinaryWriter(fs, Encoding.ASCII))
                 {
                     foreach (int item in arr)
                     {
                         bw.Write(item);
+                    }
+                }
+            }
+        }
+        static void ReadFromFile(string path, ref int[] arr)
+        {
+            using(FileStream fs = new FileStream(path, FileMode.Open, FileAccess.Read))
+            {
+                arr = new int[fs.Length / 4];
+                int count = 0;
+
+                using(BinaryReader br = new BinaryReader(fs, Encoding.ASCII))
+                {
+                    while(count != fs.Length / 4)
+                    {
+                        arr[count++] = br.ReadInt32();
                     }
                 }
             }
@@ -44,9 +60,18 @@ namespace task_1
             int[] arr = new int[size];
             string path = "data.txt";
 
-            FillArray(arr, size);
+            FillArray(arr);
 
             WriteToFile(path, arr);
+
+            int[] newArr = null;
+
+            ReadFromFile(path, ref newArr);
+
+            foreach (int item in newArr)
+            {
+                Console.WriteLine(item);
+            }
         }
     }
 }
